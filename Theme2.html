@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="style.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <title>Main Page</title>
+</head>
+<body>
+    <img src="images/flowrsForwellcome.png" alt="Flower" id="headerFlower"/>
+    
+    <main id="theme2-center">
+        <h1 class="split-title">add your message...</h1>
+        
+        <div class="envelope-wrap">
+            <img src="images/Th2_env.png" alt="letter" id="letter"/>
+            <img src="images/RedRose.png" alt="red Rose" class="theme2-rose"/>
+            <button id="addTextbtn" aria-label="Add text">+</button>
+        </div>
+    </main>
+
+    <!-- Modal للرسالة -->
+    <div class="modal-overlay" id="modal" hidden>
+        <div class="modal">
+            <h3>اكتب رسالتك</h3>
+            <textarea id="messageInput" rows="6" placeholder="اكتب هنا..."></textarea>
+        </div>
+    </div>
+
+    <script>
+    (function(){
+        const addBtn = document.getElementById('addTextbtn');
+        const modal = document.getElementById('modal');
+        const msgInput = document.getElementById('messageInput');
+
+        // افتح المودال عند زر +
+        if (addBtn) {
+            addBtn.addEventListener('click', () => {
+                modal.hidden = false;
+                msgInput.focus();
+            });
+        }
+
+        // إغلاق عند النقر خارج النافذة
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.hidden = true;
+            });
+        }
+
+        // Esc يغلق المودال
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal && !modal.hidden) modal.hidden = true;
+        });
+    })();
+    </script>
+</body>
+</html>

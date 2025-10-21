@@ -1,0 +1,333 @@
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items:  flex-start;
+    min-height: 100vh;
+    margin: 0;
+    color: #600d0d;
+    font-family: 'Playfair Display', serif;
+    background-color: #f3eee2;
+}
+#footerFlower{
+    position: absolute;
+    bottom: 0;
+    left: 0%;
+    width: 20%;
+    height: auto;
+    z-index: -1;
+}
+#headerFlower{
+    position: absolute;
+    top: 0;
+    right: 0%;
+    width: 20%;
+    height: auto;
+    z-index: -1;
+}
+#letter{
+    display: block;
+    margin-top: 250px;
+    
+    width: 70%;
+}
+/* Centered welcome area used by WelcomPage.html */
+#welcome-center{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 70vh; /* keep it vertically centered-ish */
+    position: relative;
+    z-index: 2; /* sit above background images */
+    padding-top: 60px; /* move content down */
+}
+
+#welcome-center .title{
+    margin: 0 0 8px 0;
+    font-size: 56px;
+    letter-spacing: 4px;
+    color: #2f1a2b;
+    font-family: 'Pinyon Script', cursive;
+}
+
+#welcome-center .subtitle{
+    margin: 0 0 24px 0; /* space before the envelope image */
+    font-size: 20px;
+    color: #3f2a33;
+}
+
+#letter{
+    width: 300px;
+    margin-top: 40px; /* increase space below subtitle so envelope sits lower */
+    z-index: 3;
+}
+
+.start-btn{
+    display: inline-block;
+    margin-top: 50px;
+    padding: 10px 20px;
+    background: #600d0d;
+    color: #f9f3f3;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    z-index: 4;
+}
+.start-btn:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+}
+
+/* Theme bar (left-side vertical buttons) */
+#theme-bar{
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);   /* يثبت الشريط في منتصف الارتفاع */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    z-index: 1000;
+
+    /* الخلفية البيضاوية حول الأزرار */
+    background: #eadfc6;           /* لون البيج المشابه للصورة */
+    padding: 18px 12px;            /* فراغ داخلي لإنشاء الشكل البيضاوي */
+    border-radius: 999px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    width: 84px;                   /* عرض الحاوية البيضاوية */
+    box-sizing: border-box;
+}
+.theme-btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;       /* قطر الدائرة الداخلية */
+    height: 48px;      /* قطر الدائرة الداخلية */
+    padding: 0;
+    font-size: 20px;
+    font-weight: 700;
+    background: #5a0c0c; /* لون الداكن داخل الدائرة */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50%; /* يجعل العنصر دائري */
+    box-shadow: 0 6px 14px rgba(0,0,0,0.14);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    box-sizing: border-box;
+}
+.theme-btn:hover{
+    transform: translateX(6px);
+    box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+}
+
+
+#center-text {
+    /* container must be positioned so absolutely-positioned child can center against it */
+    position: relative;
+    width: 100%;
+    min-height: 100vh; /* make it fill the viewport so centering is visible */
+}
+
+#center-text .text-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    font-weight: bold;
+    color: #6b2d5c;
+    background-color: rgba(182, 158, 158, 0.8);
+    padding: 15px 25px;
+    border-radius: 12px;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* Title + subtitle styling */
+.text-box .title {
+    margin: 0 0 8px 0;
+    font-size: 48px; /* big headline */
+    letter-spacing: 4px;
+    font-weight: 700;
+    color: #2f1a2b;
+}
+
+.text-box .subtitle {
+    margin: 0;
+    font-size: 18px;
+    color: #50292a;
+    opacity: 0.95;
+}
+
+@media (max-width: 480px) {
+    .text-box .title { font-size: 32px; }
+    .text-box { padding: 12px 16px; font-size: 18px; }
+}
+#theme1-center{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    padding-top: 48px;
+    text-align: center;
+}
+
+/* عنوان مقسّم إلى سطرين */
+.split-title{
+    font-family: 'Pinyon Script', cursive;
+    color: #2f1a2b;
+    margin: 0;
+    line-height: 0.95;
+}
+.split-title span{
+    display: block;
+    font-size: 56px; /* غيّر الحجم حسب الحاجة */
+    font-weight: 700;
+}
+.envelope-wrap{
+    position: relative;
+    width: 320px;          /* عرض الظرف - عدِّل حسب الصورة */
+    max-width: 80vw;
+    display: flex;
+    justify-content: center;
+}
+
+/* ضبط صورة الظرف داخل الحاوية */
+#theme1-center #letter{
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* زر الإضافة دائري وموجود فوق الظرف */
+#addTextbtn{
+    position: absolute;
+     left: 46%;
+    top: 70%;
+    transform: translate(-50%, -50%); /* يوسّط أفقياً وعمودياً داخل .envelope-wrap */
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: #600d0d;
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+    display: inline-grid;
+    place-items: center;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+    cursor: pointer;
+    z-index: 20; 
+}
+@media (max-width:480px){
+    .split-title span{ font-size: 36px; }
+    .envelope-wrap{ width: 220px; }
+    #addTextbtn{ width:48px; height:48px; font-size:22px; right:14px; bottom:14px; }
+}
+
+/* Modal (نافذة) و أنماطها */
+.modal-overlay{
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.42);
+    z-index: 9999;
+}
+
+.modal-overlay:not([hidden]){
+    display: grid;
+    place-items: center;
+}
+.modal{
+    width: min(540px, 92vw);
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+}
+.modal h3{ margin:0 0 8px 0; font-size:18px; }
+.modal textarea{
+    width: 100%;
+    box-sizing: border-box;
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* استجابة */
+@media (max-width:480px){
+    .modal{ padding:12px; }
+    .modal textarea{ min-height:90px; }
+}
+/* ...existing code... */
+
+#theme3-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 20px;
+}
+
+#theme3-center .split-title {
+    margin-bottom: 40px;
+    font-size: 42px;
+    color: #600d0d;
+}
+
+#theme3-center .envelope-wrap {
+    position: relative;
+    width: 70%;
+    max-width: 600px;
+}
+/* ...existing code... */
+
+#theme2-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+}
+
+#theme2-center .split-title {
+    margin-bottom: 40px;
+    font-size: 42px;
+    color: #600d0d;
+}
+
+#theme2-center .envelope-wrap {
+    position: relative;
+    width: 70%;
+    max-width: 600px;
+}
+
+.theme2-rose {
+    position: absolute;
+    width: 120px;
+    right: -87px;
+    bottom: -20px;
+    z-index: 99;
+}
+
+/* تعديل موضع الزر + للثيم 2 */
+#theme2-center #addTextbtn {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
