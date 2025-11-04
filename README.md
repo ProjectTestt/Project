@@ -45,8 +45,8 @@ Before running this project, ensure that you have the following:
 ### 👩‍💻 Authors
 
 Created by Ghala Mobark,
-shojun,
-nijla
+Shojun Al-madani,
+Najla Al-ajlani
 
 ---
 ### 🕒 Version History
