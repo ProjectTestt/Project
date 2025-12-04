@@ -204,11 +204,12 @@ body {
     display: block;
 }
 
-/* زر الإضافة دائري وموجود فوق الظرف */
+/* زر الإضافة دائري وموجود فوق الظرف (متمركز داخل الصورة) */
 #addTextbtn{
     position: absolute;
-     left: 46%;
-    top: 70%;
+    /* ضع الزر في وسط العنصر الحاوي (.envelope-wrap) */
+    left: 50%;
+    top: 50%;
     transform: translate(-50%, -50%); /* يوسّط أفقياً وعمودياً داخل .envelope-wrap */
     width: 56px;
     height: 56px;
@@ -224,10 +225,17 @@ body {
     cursor: pointer;
     z-index: 20; 
 }
+/* تنسيق لاحتواء زر التعديل تحت الصورة */
+.edit-wrap{
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+}
 @media (max-width:480px){
     .split-title span{ font-size: 36px; }
     .envelope-wrap{ width: 220px; }
-    #addTextbtn{ width:48px; height:48px; font-size:22px; right:14px; bottom:14px; }
+    /* للموبايل: احتفظ بالمركز داخل الحاوية لكن صغّر الزر قليلاً */
+    #addTextbtn{ width:48px; height:48px; font-size:22px; left:50%; top:50%; transform: translate(-50%, -50%); }
 }
 
 /* Modal (نافذة) و أنماطها */
@@ -331,3 +339,71 @@ body {
     top: 50%;
     transform: translate(-50%, -50%);
 }
+.back-btn{
+    position: fixed;
+    left: 16px;              /* المسافة من اليسار */
+    top: 16px;               /* المسافة من الأعلى */
+    width: 44px;
+    height: 44px;
+    display: inline-grid;
+    place-items: center;
+    background: #600d0d;
+    color: #f9f3f3;
+    text-decoration: none;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    z-index: 2200;
+    font-weight: 700;
+    font-size: 20px;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.back-btn:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(0,0,0,0.12);
+}
+
+/* استجابة للشاشات الصغيرة */
+@media (max-width:480px){
+    .back-btn{ left: 10px; top: 10px; width:40px; height:40px; font-size:18px; }
+}
+.letter-text{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 70%;
+    color: #2f1a2b;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: center;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    z-index: 15;
+    pointer-events: none;
+    padding: 12px;
+}
+
+.modal-actions{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.save-btn{
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: #600d0d;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.12s ease;
+}
+
+.save-btn:hover{
+    background: #4a0a0a;
+}
+
