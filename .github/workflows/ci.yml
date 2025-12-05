@@ -1,0 +1,20 @@
+name: Deploy Website
+
+on:
+  push:
+    branches:
+      - master   # يشتغل فقط لما تسوي push للماستر
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # نشر على GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./   # مجلد الموقع (مثلاً dist أو public أو الجذر)
