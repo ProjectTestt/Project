@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="style.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <title>View Message</title>
+</head>
+<body>
+    <img src="images/flowrsForwellcome.png" alt="Flower" id="headerFlower"/>
+    
+    <main id="view-message-center">
+        <h1 class="split-title" style="color: #600d0d;">
+            <span>You've received</span>
+            <span>a message...</span>
+        </h1>
+
+        <div class="envelope-wrap view-only">
+            <img src="images/cardTh1.png" alt="letter" id="viewLetter"/>
+            <div class="letter-text" id="viewLetterText"></div>
+        </div>
+
+        <div class="view-actions">
+            <button id="downloadBtn" class="save-btn" aria-label="Download message">📥 Download</button>
+            <button id="shareBtn" class="save-btn" aria-label="Share message">📤 Share</button>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+(function() {
+    const viewLetterText = document.getElementById('viewLetterText');
+    const envelopeWrap = document.querySelector('.envelope-wrap.view-only');
+    
+    // استخراج الرسالة من URL parameter أو localStorage
+    const urlParams = new URLSearchParams(window.location.search);
+    const messageFromURL = urlParams.get('message');
+    
+    const message = messageFromURL || localStorage.getItem('message') || '';
+    
+    if (!message) {
+        document.querySelector('main').innerHTML = '<h2 style="text-align: center; color: #600d0d;">لا توجد رسالة للعرض</h2>';
+    } else {
+        viewLetterText.textContent = message;
+        viewLetterText.style.whiteSpace = 'pre-wrap';
+        viewLetterText.style.overflowWrap = 'break-word';
+        
+        // Download button - يحفظ الصورة
+        document.getElementById('downloadBtn').addEventListener('click', async () => {
+            try {
+                const canvas = await html2canvas(envelopeWrap, {
+                    backgroundColor: '#f3eee2',
+                    scale: 2,
+                });
+                
+                canvas.toBlob(blob => {
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = 'message.png';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                });
+            } catch (error) {
+                alert('فشل تحميل الصورة: ' + error);
+            }
+        });
+        
+        // Share button
+        document.getElementById('shareBtn').addEventListener('click', async () => {
+            try {
+                const canvas = await html2canvas(envelopeWrap, {
+                    backgroundColor: '#f3eee2',
+                    scale: 2,
+                });
+                
+                canvas.toBlob(async blob => {
+                    const file = new File([blob], "message.png", { type: "image/png" });
+                    
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                            files: [file],
+                            text: "Check out this message!",
+                        });
+                    } else {
+                        alert('جهازك لا يدعم المشاركة المباشرة');
+                    }
+                });
+            } catch (error) {
+                alert('فشل المشاركة: ' + error);
+            }
+        });
+    }
+})();
+    </script>
+
+</body>
+</html>

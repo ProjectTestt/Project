@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="style.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <title>Save & Share</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <a href="Theme1.html" class="back-btn" aria-label="Back to editor">←</a>
+    <img src="images/flowrsForwellcome.png" alt="Flower" id="headerFlower"/>
+    
+    <main id="save-center">
+        <h2 class="save-title">Your Message is Ready!</h2>
+        
+        <div class="preview-container" id="captureContainer">
+            <img src="images/cardTh1.png" alt="letter" id="previewLetter"/>
+            <div class="preview-text" id="previewText"></div>
+        </div>
+
+        <div class="button-group"></div>
+
+        <!-- Share Link Section -->
+        <div class="share-link-section">
+            <h3>Share Your Message</h3>
+            <div class="link-input-group">
+                <input type="text" class="share-link-input" id="shareLink" readonly placeholder="Your share link...">
+                <button class="copy-link-btn" id="copyLinkBtn">Copy</button>
+            </div>
+            <div class="social-buttons">
+                <button class="social-btn whatsapp" id="socialWhatsapp">💚 WhatsApp</button>
+                <button class="social-btn instagram" id="socialInstagram">📷 Instagram</button>
+                <button class="social-btn snapchat" id="socialSnapchat">👻 Snapchat</button>
+                <button class="social-btn twitter" id="socialTwitter">𝕏 Twitter</button>
+            </div>
+        </div>
+    </main>
+
+    <canvas id="imageCanvas"></canvas>
+
+    <script>
+(function() {
+
+    const previewText = document.getElementById('previewText');
+    const captureContainer = document.getElementById('captureContainer');
+
+    const message = localStorage.getItem('message') || '';
+    previewText.textContent = message;
+    previewText.style.whiteSpace = 'pre-wrap';
+    previewText.style.overflowWrap = 'break-word';
+
+    // توليد رابط المشاركة بحيث يتضمن الرسالة كـ parameter
+    const encodedMessage = encodeURIComponent(message);
+    const shareUrl = window.location.origin + window.location.pathname.replace('SavePage.html', 'ViewMessage.html') + '?message=' + encodedMessage;
+    document.getElementById('shareLink').value = shareUrl;
+
+    //===== توليد الصورة =====
+    async function generateImageBlob() {
+        const canvas = await html2canvas(captureContainer, {
+            backgroundColor: '#f3eee2',
+            scale: 2,
+        });
+
+        return new Promise(resolve => {
+            canvas.toBlob(blob => resolve(blob), "image/png");
+        });
+    }
+
+    //===== مشاركة الصورة =====
+    async function shareImageDirect() {
+        const blob = await generateImageBlob();
+        if (!blob) return alert("Failed to create image.");
+
+        const file = new File([blob], "message.png", { type: "image/png" });
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+                await navigator.share({
+                    files: [file],
+                    text: "Check my message!",
+                });
+            } catch (e) {
+                console.log("Share canceled", e);
+            }
+        } else {
+            alert("جهازك لا يدعم مشاركة الصور مباشرة.");
+        }
+    }
+
+    // -------------------------------
+    // == مشاركة الصورة للمنصات ==
+    // -------------------------------
+
+    // واتساب (يرسل الصورة مباشرة)
+    document.getElementById("socialWhatsapp").addEventListener("click", async () => {
+        await shareImageDirect();
+    });
+
+    // سناب (يشارك الصورة مباشرة)
+    document.getElementById("socialSnapchat").addEventListener("click", async () => {
+        await shareImageDirect();
+    });
+
+    // انستغرام (يشارك الصورة مباشرة)
+    document.getElementById("socialInstagram").addEventListener("click", async () => {
+        await shareImageDirect();
+    });
+
+    // تويتر (يدعم Web Share في بعض الأجهزة)
+    document.getElementById("socialTwitter").addEventListener("click", async () => {
+        await shareImageDirect();
+    });
+
+    // نسخ الرابط إلى الحافظة
+    document.getElementById("copyLinkBtn").addEventListener("click", () => {
+        const shareLink = document.getElementById("shareLink");
+        
+        // نسخ النص إلى الحافظة
+        navigator.clipboard.writeText(shareLink.value).then(() => {
+            // تغيير نص الزر مؤقتاً
+            const originalText = document.getElementById("copyLinkBtn").textContent;
+            document.getElementById("copyLinkBtn").textContent = "✓ Copied!";
+            
+            // إعادة النص الأصلي بعد ثانيتين
+            setTimeout(() => {
+                document.getElementById("copyLinkBtn").textContent = originalText;
+            }, 2000);
+        }).catch(err => {
+            alert("فشل نسخ الرابط: " + err);
+        });
+    });
+
+})();
+    </script>
+
+</body>
+</html>

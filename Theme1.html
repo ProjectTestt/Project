@@ -26,6 +26,7 @@
         <div class="edit-wrap">
             <button id="editBtn" class="save-btn" aria-label="Edit message" hidden>Edit</button>
             <button id="deleteBtn" class="save-btn" aria-label="Delete message" hidden>Delete</button>
+            <button id="saveBtn" class="save-btn" aria-label="Save and share" hidden>Save</button>
         </div>
         
     </main>
@@ -43,17 +44,36 @@
     const addBtn = document.getElementById('addTextbtn');
     const editBtn = document.getElementById('editBtn');
     const deleteBtn = document.getElementById('deleteBtn');
+    const savePushBtn = document.getElementById('saveBtn');
     const modal = document.getElementById('modal');
     const msgInput = document.getElementById('messageInput');
     const saveBtn = document.getElementById('saveMsg');
     const letterText = document.getElementById('letterText');
     const envelope = document.querySelector('.envelope-wrap');
 
-    // عند التحميل: إظهار زر التعديل وحذف فقط إذا كان هناك نص محفوظ
+    // عند التحميل: استرجاع الرسالة من localStorage إن وجدت
     const init = () => {
+        // إذا كان التحميل من تحديث الصفحة (F5)، امسح الرسالة
+        const onSavePage = sessionStorage.getItem('onSavePage') === 'true';
+        
+        if (!onSavePage && !sessionStorage.getItem('fromShare')) {
+            // تحميل عادي - امسح الرسالة
+            localStorage.removeItem('message');
+        } else {
+            // قادم من SavePage - احتفظ بالرسالة
+            sessionStorage.removeItem('onSavePage');
+        }
+        
+        // محاولة استرجاع الرسالة من localStorage (عند العودة من SavePage)
+        const savedMessage = localStorage.getItem('message');
+        if (savedMessage && letterText) {
+            letterText.textContent = savedMessage;
+        }
+        
         const existing = letterText ? (letterText.textContent || '').trim() : '';
         if (editBtn) editBtn.hidden = existing === '';
         if (deleteBtn) deleteBtn.hidden = existing === '';
+        if (savePushBtn) savePushBtn.hidden = existing === '';
         // إخفاء الزر إذا كان هناك نص
         if (addBtn) {
             const hasText = existing !== '';
@@ -88,6 +108,7 @@
 
             if (editBtn) editBtn.hidden = true;
             if (deleteBtn) deleteBtn.hidden = true;
+            if (savePushBtn) savePushBtn.hidden = true;
 
             // إظهار زر الإضافة عند الحذف
             if (addBtn) {
@@ -126,9 +147,27 @@
             if (deleteBtn) {
                 deleteBtn.hidden = newText.trim() === '';
             }
+            if (savePushBtn) {
+                savePushBtn.hidden = newText.trim() === '';
+            }
         });
     }
     //نجلا
+
+    // حدث زر الحفظ والمشاركة (Save & Share)
+    if (savePushBtn) {
+        savePushBtn.addEventListener('click', () => {
+            const messageText = letterText ? (letterText.textContent || '').trim() : '';
+            if (messageText !== '') {
+                // حفظ الرسالة في localStorage
+                localStorage.setItem('message', messageText);
+                // وضع علامة أننا قادمون من SavePage
+                sessionStorage.setItem('onSavePage', 'true');
+                // الانتقال إلى صفحة الحفظ والمشاركة
+                window.location.href = 'SavePage.html';
+            }
+        });
+    }
 
             // إغلاق عند النقر خارج النافذة
             if (modal) {
@@ -165,4 +204,5 @@
 
 </body>
 </html>
+
 
