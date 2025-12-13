@@ -17,13 +17,6 @@ It aims to demonstrate the practical application of these concepts through a sim
 
 ## 🚀 Getting Started
 
-### 🧩 Dependencies
-
-Before running this project, ensure that you have the following:
-- A modern web browser (e.g., Chrome, Edge, Firefox)
-- Visual Studio or any code editor that supports HTML/CSS/JavaScript
-- Git (optional, for version control)
-
 ---
 
 ### 💾 Installing
@@ -36,12 +29,6 @@ Before running this project, ensure that you have the following:
 
 ---
 
-### ▶️ Executing program
-
-(Execution steps will be added later as development progresses.)
-
----
-
 ### 👩‍💻 Authors
 
 Created by Ghala Mobark,
@@ -50,6 +37,13 @@ Najla Al-ajlani
 
 ---
 ### 🕒 Version History
-- 0.1
+- 1.0
  - Initial project setup
- - Added wellcome page,  mainPage, and themes
+ - Added wellcome page,  mainPage, and one theme
+-2.0
+   -Added share feature(via link/social media platforms)
+-3.0
+   -Added 2 new themes
+   -Introduced dark mode feature
+
+
