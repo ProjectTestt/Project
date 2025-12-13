@@ -40,10 +40,10 @@ Najla Al-ajlani
 - 1.0
  - Initial project setup
  - Added wellcome page,  mainPage, and one theme
--2.0
-   -Added share feature(via link/social media platforms)
--3.0
-   -Added 2 new themes
-   -Introduced dark mode feature
+- 2.0
+   - Added share feature(via link/social media platforms)
+- 3.0
+   - Added 2 new themes
+   - Introduced dark mode feature
 
 
