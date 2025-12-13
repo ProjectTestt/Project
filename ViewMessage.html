@@ -34,11 +34,30 @@
     const viewLetterText = document.getElementById('viewLetterText');
     const envelopeWrap = document.querySelector('.envelope-wrap.view-only');
     
-    // استخراج الرسالة من URL parameter أو localStorage
+    // استخراج الرسالة والثيم من URL parameters أو localStorage
     const urlParams = new URLSearchParams(window.location.search);
     const messageFromURL = urlParams.get('message');
+    const themeFromURL = urlParams.get('theme');
     
     const message = messageFromURL || localStorage.getItem('message') || '';
+    const theme = themeFromURL || localStorage.getItem('currentTheme') || '1';
+    
+    // تعيين الصورة الصحيحة حسب الثيم
+    const themeImages = {
+        '1': 'images/cardTh1.png',
+        '2': 'images/cardTh2.png',
+        '3': 'images/cardTh3.png'
+    };
+    
+    const viewLetter = document.getElementById('viewLetter');
+    if (viewLetter) {
+        viewLetter.src = themeImages[theme];
+    }
+    
+    // إضافة class حسب الثيم للتحكم في التمدد
+    if (envelopeWrap) {
+        envelopeWrap.classList.add('theme-' + theme);
+    }
     
     if (!message) {
         document.querySelector('main').innerHTML = '<h2 style="text-align: center; color: #600d0d;">لا توجد رسالة للعرض</h2>';

@@ -7,50 +7,230 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Pinyon+Script&display=swap" rel="stylesheet">
     <script src="darkmode.js"></script>
     <title>Main Page</title>
+    
 </head>
 <body>
+    <a href="MainPage.html" class="back-btn" aria-label="Back to main">←</a>
+    <img src="images/flowrsForwellcome.png" alt="Flower" id="headerFlower"/>
     <main id="theme3-center">
-        <h1 class="split-title">add your message...</h1>
-        
+        <h1 class="split-title" style="color: #600d0d;">
+            <span>add your</span>
+            <span>message...</span>
+        </h1>
+
         <div class="envelope-wrap">
             <img src="images/cardTh3.png" alt="letter" id="letter"/>
-            <button id="addTextbtn" aria-label="Add text">+</button>
+            <div class="letter-text" id="letterText"></div>
+            <button id="addTextbtn" class="add-text-btn" aria-label="Add text" hidden>+</button>
         </div>
+        <!-- زر التعديل تحت الصورة، يظهر فقط عند وجود نص محفوظ -->
+        <div class="edit-wrap">
+            <button id="editBtn" class="save-btn" aria-label="Edit message" hidden>Edit</button>
+            <button id="deleteBtn" class="save-btn" aria-label="Delete message" hidden>Delete</button>
+            <button id="saveBtn" class="save-btn" aria-label="Save and share" hidden>share</button>
+        </div>
+        
     </main>
-
-    <!-- Modal للرسالة -->
     <div class="modal-overlay" id="modal" hidden>
-        <div class="modal">
-            <h3>اكتب رسالتك</h3>
-            <textarea id="messageInput" rows="6" placeholder="اكتب هنا..."></textarea>
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <h3 id="modalTitle">Write your message</h3>
+            <textarea id="messageInput" rows="6" placeholder="Type here..." maxlength="300"></textarea>
+            <div style="font-size: 12px; color: #999; margin-top: 5px; text-align: right; display: flex; justify-content: space-between; align-items: center;">
+                <span id="charWarning" style="color: #cc0000; display: none; font-weight: bold;">Character limit reached (300/300)</span>
+                <span><span id="charCount">0</span>/300</span>
+            </div>
+            <div class="modal-actions">
+                <button id="saveMsg" class="save-btn">Save</button>
+            </div>
         </div>
     </div>
-
-    <script>
+            <script>
     (function(){
-        const addBtn = document.getElementById('addTextbtn');
-        const modal = document.getElementById('modal');
-        const msgInput = document.getElementById('messageInput');
+    const addBtn = document.getElementById('addTextbtn');
+    const editBtn = document.getElementById('editBtn');
+    const deleteBtn = document.getElementById('deleteBtn');
+    const savePushBtn = document.getElementById('saveBtn');
+    const modal = document.getElementById('modal');
+    const msgInput = document.getElementById('messageInput');
+    const saveBtn = document.getElementById('saveMsg');
+    const letterText = document.getElementById('letterText');
+    const envelope = document.querySelector('.envelope-wrap');
 
-        // افتح المودال عند زر +
+    // عند التحميل: استرجاع الرسالة من localStorage إن وجدت
+    const init = () => {
+        // إذا كان التحميل من تحديث الصفحة (F5)، امسح الرسالة
+        const onSavePage = sessionStorage.getItem('onSavePage') === 'true';
+        
+        if (!onSavePage && !sessionStorage.getItem('fromShare')) {
+            // تحميل عادي - امسح الرسالة
+            localStorage.removeItem('message');
+        } else {
+            // قادم من SavePage - احتفظ بالرسالة
+            sessionStorage.removeItem('onSavePage');
+        }
+        
+        // محاولة استرجاع الرسالة من localStorage (عند العودة من SavePage)
+        const savedMessage = localStorage.getItem('message');
+        if (savedMessage && letterText) {
+            letterText.textContent = savedMessage;
+        }
+        
+        const existing = letterText ? (letterText.textContent || '').trim() : '';
+        if (editBtn) editBtn.hidden = existing === '';
+        if (deleteBtn) deleteBtn.hidden = existing === '';
+        if (savePushBtn) savePushBtn.hidden = existing === '';
+        // إخفاء الزر إذا كان هناك نص
         if (addBtn) {
-            addBtn.addEventListener('click', () => {
-                modal.hidden = false;
-                msgInput.focus();
-            });
+            const hasText = existing !== '';
+            addBtn.hidden = hasText;
+            addBtn.style.display = hasText ? 'none' : 'block';
         }
+    };
 
-        // إغلاق عند النقر خارج النافذة
-        if (modal) {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.hidden = true;
-            });
+    // دالة لفتح المودال وتعبئته بالنص الحالي
+    const openModal = () => {
+        // إعادة جلب عنصر الزر في حال تمت إعادته ديناميكياً
+        const currentLetter = document.getElementById('letterText');
+        msgInput.value = currentLetter ? currentLetter.textContent : '';
+        modal.hidden = false;
+        msgInput.focus();
+        updateCharCount();
+    };
+
+    // تحديث عداد الأحرف
+    const updateCharCount = () => {
+        const count = msgInput.value.length;
+        const charCountSpan = document.getElementById('charCount');
+        const charWarning = document.getElementById('charWarning');
+        
+        if (charCountSpan) {
+            charCountSpan.textContent = count;
         }
+        
+        if (charWarning) {
+            if (count >= 300) {
+                charWarning.style.display = 'inline';
+            } else {
+                charWarning.style.display = 'none';
+            }
+        }
+    };
 
-        // Esc يغلق المودال
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal && !modal.hidden) modal.hidden = true;
+    // استمع لتغييرات في textarea
+    if (msgInput) {
+        msgInput.addEventListener('input', updateCharCount);
+        msgInput.addEventListener('keyup', updateCharCount);
+    }
+
+    // افتح المودال عند زر +
+    if (addBtn) {
+        addBtn.addEventListener('click', openModal);
+    }
+
+    // افتح المودال عند زر التعديل وتعبئته بالنص الحالي
+    if (editBtn) {
+        editBtn.addEventListener('click', openModal);
+    }
+
+    // زر الحذف: يمسح النص ويخفي أزرار التعديل والحذف ويعيد زر الإضافة إن اختفى
+    if (deleteBtn) {
+        deleteBtn.addEventListener('click', () => {
+            if (letterText) letterText.textContent = '';
+
+            if (editBtn) editBtn.hidden = true;
+            if (deleteBtn) deleteBtn.hidden = true;
+            if (savePushBtn) savePushBtn.hidden = true;
+
+            // إظهار زر الإضافة عند الحذف
+            if (addBtn) {
+                addBtn.hidden = false;
+                addBtn.style.display = 'block';
+            }
         });
+    }
+
+    // حفظ النص على الصورة عند الضغط على الزر
+    if (saveBtn) {
+        saveBtn.addEventListener('click', () => {
+            // حالة النص السابق والجديد
+            const prevText = letterText ? (letterText.textContent || '').trim() : '';
+            const newText = msgInput.value || '';
+
+            if (letterText) {
+                letterText.textContent = newText;
+            }
+
+            // اغلق المودال
+            modal.hidden = true;
+
+            // إخفاء/إظهار زر الإضافة بناءً على وجود النص
+            const currentAdd = document.getElementById('addTextbtn');
+            const hasText = newText.trim() !== '';
+            if (currentAdd) {
+                currentAdd.hidden = hasText;
+                currentAdd.style.display = hasText ? 'none' : 'block';
+            }
+
+            // إظهار زر التعديل وحذف إذا أصبح هناك نص، وإخفاؤهما إذا تمت إزالة النص
+            if (editBtn) {
+                editBtn.hidden = newText.trim() === '';
+            }
+            if (deleteBtn) {
+                deleteBtn.hidden = newText.trim() === '';
+            }
+            if (savePushBtn) {
+                savePushBtn.hidden = newText.trim() === '';
+            }
+        });
+    }
+    //نجلا
+
+    // حدث زر الحفظ والمشاركة (Save & Share)
+    if (savePushBtn) {
+        savePushBtn.addEventListener('click', () => {
+            const messageText = letterText ? (letterText.textContent || '').trim() : '';
+            if (messageText !== '') {
+                // حفظ الرسالة في localStorage
+                localStorage.setItem('message', messageText);
+                // حفظ الثيم المستخدم
+                localStorage.setItem('currentTheme', '3');
+                // وضع علامة أننا قادمون من SavePage
+                sessionStorage.setItem('onSavePage', 'true');
+                // الانتقال إلى صفحة الحفظ والمشاركة
+                window.location.href = 'SavePage.html';
+            }
+        });
+    }
+
+            // إغلاق عند النقر خارج النافذة
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.hidden = true;
+                        // عند إغلاق المودال، تحدث حالة الزر بناءً على النص الحالي
+                        const currentText = letterText ? (letterText.textContent || '').trim() : '';
+                        if (addBtn) {
+                            const hasText = currentText !== '';
+                            addBtn.hidden = hasText;
+                            addBtn.style.display = hasText ? 'none' : 'block';
+                        }
+                    }
+                });
+            }    // Esc يغلق المودال
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal && !modal.hidden) {
+            modal.hidden = true;
+            // عند إغلاق المودال، تحدث حالة الزر بناءً على النص الحالي
+            const currentText = letterText ? (letterText.textContent || '').trim() : '';
+            if (addBtn) {
+                const hasText = currentText !== '';
+                addBtn.hidden = hasText;
+                addBtn.style.display = hasText ? 'none' : 'block';
+            }
+        }
+    });
+
+    init();
     })();
     </script>
 </body>

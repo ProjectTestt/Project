@@ -21,20 +21,24 @@
         <div class="envelope-wrap">
             <img src="images/cardTh1.png" alt="letter" id="letter"/>
             <div class="letter-text" id="letterText"></div>
-            <button id="addTextbtn" aria-label="Add text" hidden>+</button>
+            <button id="addTextbtn" class="add-text-btn" aria-label="Add text" hidden>+</button>
         </div>
         <!-- زر التعديل تحت الصورة، يظهر فقط عند وجود نص محفوظ -->
         <div class="edit-wrap">
             <button id="editBtn" class="save-btn" aria-label="Edit message" hidden>Edit</button>
             <button id="deleteBtn" class="save-btn" aria-label="Delete message" hidden>Delete</button>
-            <button id="saveBtn" class="save-btn" aria-label="Save and share" hidden>Save</button>
+            <button id="saveBtn" class="save-btn" aria-label="Save and share" hidden>share</button>
         </div>
         
     </main>
     <div class="modal-overlay" id="modal" hidden>
         <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
             <h3 id="modalTitle">Write your message</h3>
-            <textarea id="messageInput" rows="6" placeholder="Type here..."></textarea>
+            <textarea id="messageInput" rows="6" placeholder="Type here..." maxlength="400"></textarea>
+            <div style="font-size: 12px; color: #999; margin-top: 5px; text-align: right; display: flex; justify-content: space-between; align-items: center;">
+                <span id="charWarning" style="color: #cc0000; display: none; font-weight: bold;">Character limit reached (400/400)</span>
+                <span><span id="charCount">0</span>/400</span>
+            </div>
             <div class="modal-actions">
                 <button id="saveMsg" class="save-btn">Save</button>
             </div>
@@ -90,7 +94,33 @@
         msgInput.value = currentLetter ? currentLetter.textContent : '';
         modal.hidden = false;
         msgInput.focus();
+        updateCharCount();
     };
+
+    // تحديث عداد الأحرف
+    const updateCharCount = () => {
+        const count = msgInput.value.length;
+        const charCountSpan = document.getElementById('charCount');
+        const charWarning = document.getElementById('charWarning');
+        
+        if (charCountSpan) {
+            charCountSpan.textContent = count;
+        }
+        
+        if (charWarning) {
+            if (count >= 400) {
+                charWarning.style.display = 'inline';
+            } else {
+                charWarning.style.display = 'none';
+            }
+        }
+    };
+
+    // استمع لتغييرات في textarea
+    if (msgInput) {
+        msgInput.addEventListener('input', updateCharCount);
+        msgInput.addEventListener('keyup', updateCharCount);
+    }
 
     // افتح المودال عند زر +
     if (addBtn) {
@@ -162,6 +192,8 @@
             if (messageText !== '') {
                 // حفظ الرسالة في localStorage
                 localStorage.setItem('message', messageText);
+                // حفظ الثيم المستخدم
+                localStorage.setItem('currentTheme', '1');
                 // وضع علامة أننا قادمون من SavePage
                 sessionStorage.setItem('onSavePage', 'true');
                 // الانتقال إلى صفحة الحفظ والمشاركة

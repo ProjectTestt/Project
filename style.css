@@ -115,7 +115,7 @@ body {
     background: #5a0c0c; /* لون الداكن داخل الدائرة */
     color: #fff;
     text-decoration: none;
-    border-radius: 50%; /* يجعل العنصر دائري */
+    border-radius: 50%;
     box-shadow: 0 6px 14px rgba(0,0,0,0.14);
     transition: transform 0.12s ease, box-shadow 0.12s ease;
     box-sizing: border-box;
@@ -187,12 +187,12 @@ body {
 }
 .split-title span{
     display: block;
-    font-size: 56px; /* غيّر الحجم حسب الحاجة */
+    font-size: 56px; 
     font-weight: 700;
 }
 .envelope-wrap{
     position: relative;
-    width: 320px;          /* عرض الظرف - عدِّل حسب الصورة */
+    width: 320px;          /* عرض الظرف  */
     max-width: 80vw;
     display: flex;
     justify-content: center;
@@ -205,12 +205,13 @@ body {
     display: block;
 }
 
-/* زر الإضافة دائري وموجود فوق الظرف */
-#addTextbtn{
+/* زر الإضافة  */
+#addTextbtn,
+.add-text-btn{
     position: absolute;
-     left: 46%;
-    top: 70%;
-    transform: translate(-50%, -50%); /* يوسّط أفقياً وعمودياً داخل .envelope-wrap */
+     left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); 
     width: 56px;
     height: 56px;
     border-radius: 50%;
@@ -319,8 +320,8 @@ body {
 
 #theme2-center .envelope-wrap {
     position: relative;
-    width: 70%;
-    max-width: 600px;
+    width: 85%;
+    max-width: 800px;
 }
 
 .theme2-rose {
@@ -331,12 +332,36 @@ body {
     z-index: 99;
 }
 
-/* تعديل موضع الزر + للثيم 2 */
+/* تعديل موضع الزر  */
 #theme2-center #addTextbtn {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+
+/* تحسين letterText للثيم 2 ليقبل نصوص أطول */
+#theme2-center .letter-text {
+    font-size: 14px;
+    max-width: 80%;
+    line-height: 1.5;
+    padding: 15px;
+}
+
+/* تعديل موضع الزر لـ Theme3 */
+#theme3-center #addTextbtn {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* تحسين letterText للثيم 3 ليقبل نصوص أطول (300 حرف) */
+#theme3-center .letter-text {
+    font-size: 14px;
+    max-width: 75%;
+    line-height: 1.4;
+    padding: 12px;
 }
 
 /* تنسيق الأزرار الرئيسية (Edit, Delete, Save) */
@@ -370,8 +395,8 @@ body {
 
 .back-btn{
     position: fixed;
-    left: 16px;              /* المسافة من اليسار */
-    top: 16px;               /* المسافة من الأعلى */
+    left: 16px;             
+    top: 16px;              
     width: 44px;
     height: 44px;
     display: inline-grid;
@@ -454,6 +479,22 @@ body {
     margin: 0 auto;
 }
 
+/* تحديد حجم الصورة لكل ثيم */
+.preview-container.theme-1 #previewLetter {
+    width: 320px;
+    max-width: 80vw;
+}
+
+.preview-container.theme-2 #previewLetter {
+    width: 85%;
+    max-width: 800px;
+}
+
+.preview-container.theme-3 #previewLetter {
+    width: 70%;
+    max-width: 600px;
+}
+
 .preview-text {
     position: absolute;
     top: 50%;
@@ -470,6 +511,29 @@ body {
     overflow-y: auto;
     white-space: pre-wrap;
     overflow-wrap: break-word;
+}
+
+/* تحسين النص لـ Theme2 في SavePage */
+.preview-container.theme-2 .preview-text {
+    font-size: 14px;
+    width: 70%;
+    max-width: 80%;
+    line-height: 1.5;
+}
+
+/* تحسين النص لـ Theme3 في SavePage */
+.preview-container.theme-3 .preview-text {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    max-width: 75%;
+    line-height: 1.4;
+    padding: 12px;
+    text-align: center;
+    color: #cc0000;
+    font-family: 'Playfair Display', serif;
 }
 
 .button-group {
@@ -725,8 +789,8 @@ body {
 
 .envelope-wrap.view-only {
     position: relative;
-    width: 280px;
-    max-width: 85vw;
+    width: 320px;
+    max-width: 80vw;
     margin: 30px 0;
     display: flex;
     justify-content: center;
@@ -754,6 +818,20 @@ body {
     z-index: 15;
     pointer-events: none;
     white-space: pre-wrap;
+}
+
+/* تحسين النص لـ Theme2 في ViewMessage */
+.envelope-wrap.view-only.theme-2 .letter-text {
+    font-size: 13px;
+    max-width: 80%;
+    line-height: 1.4;
+}
+
+/* تحسين النص لـ Theme3 في ViewMessage */
+.envelope-wrap.view-only.theme-3 .letter-text {
+    font-size: 14px;
+    max-width: 75%;
+    line-height: 1.4;
 }
 
 .view-actions {
@@ -811,31 +889,31 @@ body {
 /* Dark mode toggle button */
 .dark-mode-btn {
     position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+    top: 70px;
+    left: 16px;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
     border: none;
     background: #600d0d;
     color: #f9f3f3;
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
     z-index: 2100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-grid;
+    place-items: center;
+    font-weight: 700;
 }
 
 .dark-mode-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(0,0,0,0.12);
 }
 
 .dark-mode-btn:active {
-    transform: scale(0.95);
+    transform: translateY(0px);
 }
 
 /* Dark mode color scheme */
