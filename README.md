@@ -47,8 +47,3 @@ Najla Al-ajlani
    - Introduced dark mode feature
 
 
----
-### 🕒 Version History
-- 0.1
- - Initial project setup
- - Added wellcome page,  mainPage, and themes
