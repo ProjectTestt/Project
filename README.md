@@ -45,5 +45,3 @@ Najla Al-ajlani
 - 3.0
    - Added 2 new themes
    - Introduced dark mode feature
-
-

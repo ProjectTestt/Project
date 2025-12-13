@@ -12,14 +12,14 @@
 <body>
     <a href="MainPage.html" class="back-btn" aria-label="Back to main">←</a>
     <img src="images/flowrsForwellcome.png" alt="Flower" id="headerFlower"/>
-    <main id="theme1-center">
+    <main id="theme2-center">
         <h1 class="split-title" style="color: #600d0d;">
             <span>add your</span>
             <span>message...</span>
         </h1>
 
         <div class="envelope-wrap">
-            <img src="images/cardTh1.png" alt="letter" id="letter"/>
+            <img src="images/cardTh2.png" alt="letter" id="letter"/>
             <div class="letter-text" id="letterText"></div>
             <button id="addTextbtn" class="add-text-btn" aria-label="Add text" hidden>+</button>
         </div>
@@ -193,7 +193,7 @@
                 // حفظ الرسالة في localStorage
                 localStorage.setItem('message', messageText);
                 // حفظ الثيم المستخدم
-                localStorage.setItem('currentTheme', '1');
+                localStorage.setItem('currentTheme', '2');
                 // وضع علامة أننا قادمون من SavePage
                 sessionStorage.setItem('onSavePage', 'true');
                 // الانتقال إلى صفحة الحفظ والمشاركة
@@ -201,7 +201,6 @@
             }
         });
     }
-    //نجلا
 
             // إغلاق عند النقر خارج النافذة
             if (modal) {
@@ -231,11 +230,8 @@
         }
     });
 
-    // تهيئة أولية
     init();
-})();
-</script>
-
+    })();
+    </script>
 </body>
 </html>
-

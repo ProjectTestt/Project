@@ -6,9 +6,15 @@
     <link href="style.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Pinyon+Script&display=swap" rel="stylesheet">
     <title>Main Page</title>
+    <script src="darkmode.js"></script>
 </head>
 
 <body>
+    <!-- Dark Mode Toggle Button -->
+    <button id="darkModeToggle" class="dark-mode-btn" title="Toggle Dark Mode">🌙</button>
+    
+    <a href="WelcomPage.html" class="back-btn" aria-label="Back to welcome">←</a>
+
     <img src="images/flowrsForwellcome.png" alt="Flower" id="headerFlower"/>
 
     <main id="welcome-center">
@@ -28,4 +34,30 @@
     <footer>
     </footer>
 
+    <script>
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const html = document.documentElement;
+        
+        // Check if dark mode was previously enabled
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        if (isDarkMode) {
+            html.setAttribute('data-theme', 'dark');
+            darkModeToggle.textContent = '☀️';
+        }
+        
+        // Toggle dark mode on button click
+        darkModeToggle.addEventListener('click', function() {
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('darkMode', 'false');
+                darkModeToggle.textContent = '🌙';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('darkMode', 'true');
+                darkModeToggle.textContent = '☀️';
+            }
+        });
+    </script>
 </body>

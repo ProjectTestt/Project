@@ -12,14 +12,14 @@
 <body>
     <a href="MainPage.html" class="back-btn" aria-label="Back to main">←</a>
     <img src="images/flowrsForwellcome.png" alt="Flower" id="headerFlower"/>
-    <main id="theme1-center">
+    <main id="theme3-center">
         <h1 class="split-title" style="color: #600d0d;">
             <span>add your</span>
             <span>message...</span>
         </h1>
 
         <div class="envelope-wrap">
-            <img src="images/cardTh1.png" alt="letter" id="letter"/>
+            <img src="images/cardTh3.png" alt="letter" id="letter"/>
             <div class="letter-text" id="letterText"></div>
             <button id="addTextbtn" class="add-text-btn" aria-label="Add text" hidden>+</button>
         </div>
@@ -34,10 +34,10 @@
     <div class="modal-overlay" id="modal" hidden>
         <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
             <h3 id="modalTitle">Write your message</h3>
-            <textarea id="messageInput" rows="6" placeholder="Type here..." maxlength="400"></textarea>
+            <textarea id="messageInput" rows="6" placeholder="Type here..." maxlength="300"></textarea>
             <div style="font-size: 12px; color: #999; margin-top: 5px; text-align: right; display: flex; justify-content: space-between; align-items: center;">
-                <span id="charWarning" style="color: #cc0000; display: none; font-weight: bold;">Character limit reached (400/400)</span>
-                <span><span id="charCount">0</span>/400</span>
+                <span id="charWarning" style="color: #cc0000; display: none; font-weight: bold;">Character limit reached (300/300)</span>
+                <span><span id="charCount">0</span>/300</span>
             </div>
             <div class="modal-actions">
                 <button id="saveMsg" class="save-btn">Save</button>
@@ -108,7 +108,7 @@
         }
         
         if (charWarning) {
-            if (count >= 400) {
+            if (count >= 300) {
                 charWarning.style.display = 'inline';
             } else {
                 charWarning.style.display = 'none';
@@ -193,7 +193,7 @@
                 // حفظ الرسالة في localStorage
                 localStorage.setItem('message', messageText);
                 // حفظ الثيم المستخدم
-                localStorage.setItem('currentTheme', '1');
+                localStorage.setItem('currentTheme', '3');
                 // وضع علامة أننا قادمون من SavePage
                 sessionStorage.setItem('onSavePage', 'true');
                 // الانتقال إلى صفحة الحفظ والمشاركة
@@ -201,7 +201,6 @@
             }
         });
     }
-    //نجلا
 
             // إغلاق عند النقر خارج النافذة
             if (modal) {
@@ -231,11 +230,8 @@
         }
     });
 
-    // تهيئة أولية
     init();
-})();
-</script>
-
+    })();
+    </script>
 </body>
 </html>
-
