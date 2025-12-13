@@ -532,15 +532,16 @@ body {
 .preview-container.theme-3 .preview-text {
     position: absolute;
     left: 50%;
-    top: 45%;
+    top: 50%;
     transform: translate(-50%, -50%);
     font-size: 14px;
-    max-width: 75%;
+    max-width: 50%;
     line-height: 1.4;
     padding: 12px;
     text-align: center;
     color: #cc0000;
     font-family: 'Playfair Display', serif;
+    word-break: break-word;
 }
 
 .button-group {
